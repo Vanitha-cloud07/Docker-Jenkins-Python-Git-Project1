@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "labubu67git init
-
+        IMAGE_NAME = "labubu67/my-flask-app"
         CONTAINER_NAME = "flask-project2"
         TAG = "${BUILD_NUMBER}"
     }
