@@ -16,7 +16,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:$TAG .'
+                bat 'docker build -t %IMAGE_NAME%:%TAG% .'
             }
         }
 
@@ -27,42 +27,42 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push $IMAGE_NAME:$TAG'
-                sh 'docker tag $IMAGE_NAME:$TAG $IMAGE_NAME:latest'
-                sh 'docker push $IMAGE_NAME:latest'
+                bat 'docker push %IMAGE_NAME%:%TAG%'
+                bat 'docker tag %IMAGE_NAME%:%TAG% %IMAGE_NAME%:latest'
+                bat 'docker push %IMAGE_NAME%:latest'
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                sh 'docker stop $CONTAINER_NAME || true'
-                sh 'docker rm $CONTAINER_NAME || true'
+                bat 'docker stop %CONTAINER_NAME% || exit 0'
+                bat 'docker rm %CONTAINER_NAME% || exit 0'
             }
         }
 
         stage('Pull Latest Image') {
             steps {
-                sh 'docker pull $IMAGE_NAME:latest'
+                bat 'docker pull %IMAGE_NAME%:latest'
             }
         }
 
         stage('Run New Container') {
             steps {
-                sh 'docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME:latest'
+                bat 'docker run -d -p 5000:5000 --name %CONTAINER_NAME% %IMAGE_NAME%:latest'
             }
         }
 
         stage('Verify Application') {
             steps {
-                sh 'sleep 5'
-                sh 'curl -f http://localhost:5000'
+                bat 'timeout /t 5'
+                bat 'curl http://localhost:5000'
             }
         }
     }
