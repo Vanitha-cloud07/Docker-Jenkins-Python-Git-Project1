@@ -60,10 +60,11 @@ pipeline {
         }
 
         stage('Verify Application') {
-            steps {
-                bat 'timeout /t 5'
-                bat 'curl http://localhost:5000'
-            }
+    steps {
+        bat 'ping 127.0.0.1 -n 6 > nul'
+        bat 'curl http://localhost:5000'
+    }
+}
         }
     }
 }
