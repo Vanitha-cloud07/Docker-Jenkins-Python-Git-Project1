@@ -12,25 +12,23 @@ This project demonstrates an end-to-end CI/CD pipeline where Jenkins builds a Do
 
 GitHub → Jenkins → Docker Build → Docker Hub → EC2 → Flask App  
 
-- GitHub stores application source code  
-- Jenkins pulls code and runs the CI/CD pipeline  
-- Docker builds the application image  
-- Docker Hub stores versioned images  
-- EC2 pulls and runs the latest container  
-- Flask app is deployed and verified  
+- Application successfully built and pushed to Docker Hub  
+- Docker image versioned using build number  
+- Container deployed from Docker Hub image  
+- Jenkins pipeline completed with SUCCESS  
+- Application verified after deployment  
+
 
 ---
 
 ## Tech Stack
-
+ 
 - Jenkins – CI/CD automation  
 - Docker – Containerization  
 - Docker Hub – Image registry  
-- AWS EC2 – Deployment server  
 - Python Flask – Web application  
-- GitHub – Source code management  
-
----
+- GitHub – Source code management
+  
 
 ## CI/CD Pipeline
 
