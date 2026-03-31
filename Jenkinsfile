@@ -8,6 +8,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout Code') {
             steps {
                 checkout scm
@@ -44,12 +45,6 @@ pipeline {
             steps {
                 bat 'docker stop %CONTAINER_NAME% || exit 0'
                 bat 'docker rm %CONTAINER_NAME% || exit 0'
-            }
-        }
-
-        stage('Pull Latest Image') {
-            steps {
-                bat 'docker pull %IMAGE_NAME%:latest'
             }
         }
 
